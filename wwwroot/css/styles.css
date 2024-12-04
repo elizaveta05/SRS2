@@ -1,0 +1,174 @@
+﻿/* Глобальные стили */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    color: #222;
+    background: linear-gradient(to bottom, #ffffff, #f0f8ff);
+    line-height: 1.8;
+}
+
+/* Пространство для элементов */
+.container {
+    width: 85%;
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+/* Шапка */
+.header {
+    background: linear-gradient(45deg, #ff6f61, #ffad00);
+    color: #fff;
+    padding: 20px 0;
+    border-bottom: 4px solid #ffad00;
+    text-align: center;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Меню */
+.nav {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
+
+    .nav ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 40px; 
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+        .nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 10px 20px;
+            transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+            .nav ul li a:hover {
+                color: #ff6f61;
+                transform: scale(1.2); 
+                text-shadow: 0 4px 10px rgba(255, 255, 255, 0.8);
+                box-shadow: 0 0 15px rgba(255, 255, 255, 0.5); 
+            }
+
+
+/* Геройская секция */
+.hero {
+    background: linear-gradient(120deg, #00bcd4, #2196f3);
+    color: white;
+    padding: 100px 20px;
+    text-align: center;
+}
+
+.hero-btn {
+    background: #ffad00;
+    color: white;
+    font-size: 18px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 20px;
+}
+
+    .hero-btn:hover {
+        background: #ff6f61;
+        transform: scale(1.1);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+/* Секция "Обо мне" */
+.about {
+    background: white;
+    text-align: center;
+    padding: 50px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.about-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+    text-align: justify;
+}
+
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    transition: transform 0.3s;
+}
+
+    .profile-pic:hover {
+        transform: rotate(360deg);
+        border: 5px solid #ffad00;
+    }
+
+/* Секция "Контакты" */
+.contact {
+    background: #f0f2f5;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.contact-form {
+    background: white;
+    padding: 30px;
+    max-width: 600px;
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.checkbox-group, .radiobutton-group {
+    text-align: left;
+    margin: 10px 0;
+}
+
+/* Подвал */
+.footer {
+    background: #222;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-top: 3px solid #ffad00;
+    font-size: 14px;
+}
+
+    .footer a {
+        color: #ffad00;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s;
+    }
+
+        .footer a:hover {
+            color: #ff6f61;
+        }
+/* Кнопка */
+.btn {
+    background: #ffad00;
+    color: white;
+    font-size: 18px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+    .btn:hover {
+        background: #ff6f61;
+        transform: scale(1.1);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }

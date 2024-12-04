@@ -1,7 +1,80 @@
 ﻿@page
 @model SRS2.Pages.HomePageModel
 @{
-    ViewData["Title"] = "Главная страница";
+    ViewData["Title"] = "Верстка";
 }
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/styles.css">
+</head>
+<header class="header">
+    <div class="container">
+        <h1 class="logo">Блог</h1>
+        <nav class="nav">
+            <ul>
+                <li><a href="#home">Главная</a></li>
+                <li><a href="#about">Обо мне</a></li>
+                <li><a href="#contact">Контакты</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
 
-<h2>Добро пожаловать на главную страницу!</h2>
+<!-- Геройский блок -->
+<section class="hero" id="home">
+    <div class="container">
+        <h2>Добро пожаловать в мой блог!</h2>
+        <p>Делюсь мыслями, проектами и полезной информацией.</p>
+        <button class="btn hero-btn">Узнать больше</button>
+    </div>
+</section>
+
+<!-- Секция "Обо мне" -->
+<section class="about" id="about">
+    <div class="container">
+        <h2>Обо мне</h2>
+        <div class="about-content">
+            <img src="https://via.placeholder.com/300" alt="Фото разработчика" class="profile-pic">
+            <p>Привет! Я разработчик и блогер, увлечённый технологиями и творчеством. В моем блоге я делюсь статьями о программировании, дизайне и продуктивности. Здесь вы найдете практические советы, вдохновляющие идеи и интересные проекты, которые помогут вам в работе и личном развитии!</p>
+        </div>
+    </div>
+</section>
+
+<!-- Секция "Контакты" -->
+<section class="contact" id="contact">
+    <div class="container">
+        <h2>Связаться со мной</h2>
+        <form class="contact-form">
+            <div class="form-group">
+                <label for="name">Ваше имя</label>
+                <input type="text" id="name" class="form-control" placeholder="Введите ваше имя">
+            </div>
+            <div class="form-group">
+                <label for="email">Ваш email</label>
+                <input type="email" id="email" class="form-control" placeholder="Введите ваш email">
+            </div>
+            <div class="form-group">
+                <label for="message">Сообщение</label>
+                <textarea id="message" class="form-control" placeholder="Введите ваше сообщение"></textarea>
+            </div>
+            <div class="form-group checkbox-group">
+                <label><input type="checkbox"> Подписаться на рассылку</label>
+            </div>
+            <div class="form-group radiobutton-group">
+                <label><input type="radio" name="feedback" checked> Общая обратная связь</label>
+                <label><input type="radio" name="feedback"> Конкретный вопрос</label>
+            </div>
+            <button type="submit" class="btn">Отправить</button>
+        </form>
+    </div>
+</section>
+
+<!-- Подвал -->
+<footer class="footer">
+    <div class="container">
+        <p>&copy; Благодарю за посещение!</p>
+    </div>
+</footer>
+
