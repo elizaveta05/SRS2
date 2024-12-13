@@ -6,40 +6,51 @@
 
 <h1>Добро пожаловать, пользователь!</h1>
 
-<h2>Доступные товары</h2>
-<form method="post">
-    <table>
-        <thead>
-            <tr>
-                <th>Наименование</th>
-                <th>Цена</th>
-                <th>Количество</th>
-                <th>Действие</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var product in Model.Products)
-            {
-                <tr>
-                    <td>@product.Name</td>
-                    <td>@product.Price</td>
-                    <td>
-                        <input type="number" asp-for="SelectedQuantity" value="0" min="1" />
-                        <input type="hidden" asp-for="SelectedProductId" value="@product.Id" />
-                    </td>
-                    <td>
-                        <button type="submit">Добавить в заказ</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</form>
 
-<h2>Ваши заказы</h2>
-@if (Model.UserOrders.Any())
+<h3>Каталог товаров:</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Наименование</th>
+            <th>Цена</th>
+            <th>Количество</th>
+            <th>Действие</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model.Products)
+        {
+            <tr>
+                <form method="post" asp-page-handler="CreateOrder">
+                <td>@product.Name</td>
+                <td>@product.Price</td>
+                <td>
+                    <input type="number" asp-for="SelectedQuantity" value="0" min="1" />
+                    <input type="hidden" asp-for="SelectedProductId" value="@product.Id" />
+                </td>
+                <td>
+                    <button type="submit">Добавить в заказ</button>
+                </td>
+                </form>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (TempData["Message"] != null)
 {
-    <table>
+    <div class="alert alert-success">@TempData["Message"]</div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+@if (Model.UserOrders != null && Model.UserOrders.Count > 0)
+{
+    <h2>Ваши заказы</h2>
+    <table class="table">
         <thead>
             <tr>
                 <th>Дата заказа</th>
@@ -68,5 +79,5 @@
 }
 else
 {
-    <p>У вас пока нет заказов.</p>
+    <p>У вас еще нет заказов.</p>
 }

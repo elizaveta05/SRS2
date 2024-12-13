@@ -51,7 +51,7 @@ namespace SRS2.Pages
             return Page();
         }
 
-        public async Task<IActionResult> OnPostOrderAsync()
+        public async Task<IActionResult> OnPostCreateOrderAsync(int SelectedProductId, int SelectedQuantity)
         {
             if (Id <= 0)
             {

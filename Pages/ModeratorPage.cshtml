@@ -1,4 +1,228 @@
-﻿@page
+﻿@page "{Id:int}"
 @model SRS2.Pages.ModeratorPageModel
 @{
+    ViewData["Title"] = "Страница модератора";
 }
+
+<h1>Добро пожаловать, модератор!</h1>
+
+<h2>Список пользователей</h2>
+@if (Model.Users != null && Model.Users.Any())
+{
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Логин</th>
+                <th>Роль</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Users)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.Login</td>
+                    <td>@user.Role</td>
+                    <td>
+                        <!-- Кнопка для редактирования -->
+                        <button type="button" onclick="openEditForm(@user.Id, '@user.Login', '@user.Role')">Редактировать</button>
+
+                        <!-- Кнопка для удаления -->
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@user.Id" style="display:inline;">
+                            <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить этого пользователя?');">Удалить</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Пользователей пока нет.</p>
+}
+
+<!-- Форма для редактирования -->
+<div id="editForm" style="display:none;">
+    <h2>Редактировать пользователя</h2>
+    <form method="post" asp-page-handler="Edit">
+        <input type="hidden" asp-for="EditableUser.Id" id="editUserId" />
+        <div>
+            <label>Логин:</label>
+            <input type="text" asp-for="EditableUser.Login" id="editUserLogin" />
+        </div>
+        <div>
+            <label>Роль:</label>
+            <select asp-for="EditableUser.Role" id="editUserRole">
+                <option value="User">User</option>
+                <option value="Moderator">Moderator</option>
+            </select>
+        </div>
+        <button type="submit">Сохранить</button>
+        <button type="button" onclick="closeEditForm()">Отмена</button>
+    </form>
+</div>
+
+<script>
+    function openEditForm(id, login, role) {
+        document.getElementById('editUserId').value = id;
+        document.getElementById('editUserLogin').value = login;
+        document.getElementById('editUserRole').value = role;
+        document.getElementById('editForm').style.display = 'block';
+    }
+
+    function closeEditForm() {
+        document.getElementById('editForm').style.display = 'none';
+    }
+</script>
+
+<h2>Список продуктов</h2>
+@if (Model.Products != null && Model.Products.Any())
+{
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Название</th>
+                <th>Цена</th>
+                <th>Наличие</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model.Products)
+            {
+                <tr>
+                    <td>@product.Id</td>
+                    <td>@product.Name</td>
+                    <td>@product.Price</td>
+                    <td>@product.Stock</td>
+                    <td>
+                        <!-- Кнопка для редактирования -->
+                        <button type="button" onclick="openEditProductForm(@product.Id, '@product.Name', @product.Price, @product.Stock)">Редактировать</button>
+
+                        <!-- Кнопка для удаления -->
+                        <form method="post" asp-page-handler="DeleteProduct" asp-route-id="@product.Id" style="display:inline;">
+                            <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить этот продукт?');">Удалить</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Продуктов пока нет.</p>
+}
+
+<!-- Форма для редактирования продукта -->
+<div id="editProductForm" style="display:none;">
+    <h2>Редактировать продукт</h2>
+    <form method="post" asp-page-handler="EditProduct">
+        <input type="hidden" asp-for="EditableProduct.Id" id="editProductId" />
+        <div>
+            <label>Название:</label>
+            <input type="text" asp-for="EditableProduct.Name" id="editProductName" />
+        </div>
+        <div>
+            <label>Цена:</label>
+            <input type="number" asp-for="EditableProduct.Price" id="editProductPrice" step="0.01" />
+        </div>
+        <div>
+            <label>Наличие:</label>
+            <input type="number" asp-for="EditableProduct.Stock" id="editProductStock" />
+        </div>
+        <button type="submit">Сохранить</button>
+        <button type="button" onclick="closeEditProductForm()">Отмена</button>
+    </form>
+</div>
+
+<script>
+    function openEditProductForm(id, name, price, stock) {
+        document.getElementById('editProductId').value = id;
+        document.getElementById('editProductName').value = name;
+        document.getElementById('editProductPrice').value = price;
+        document.getElementById('editProductStock').value = stock;
+        document.getElementById('editProductForm').style.display = 'block';
+    }
+
+    function closeEditProductForm() {
+        document.getElementById('editProductForm').style.display = 'none';
+    }
+</script>
+
+<h2>Список заказов</h2>
+@if (Model.Orders != null && Model.Orders.Any())
+{
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Пользователь</th>
+                <th>Дата заказа</th>
+                <th>Общая сумма</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model.Orders)
+            {
+                <tr>
+                    <td>@order.Id</td>
+                    <td>@order.User.Login</td>
+                    <td>@order.OrderDate.ToString("g")</td>
+                    <td>@order.TotalAmount</td>
+                    <td>
+                        <button type="button" onclick="openEditOrderForm(@order.Id, '@order.User.Login', '@order.OrderDate.ToString("g")', @order.TotalAmount)">Редактировать</button>
+
+                        <form method="post" asp-page-handler="DeleteOrder" asp-route-id="@order.Id" style="display:inline;">
+                            <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить этот заказ?');">Удалить</button>
+                        </form>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Заказов пока нет.</p>
+}
+
+<div id="editOrderForm" style="display:none;">
+    <h2>Редактировать заказ</h2>
+    <form method="post" asp-page-handler="EditOrder">
+        <input type="hidden" asp-for="EditableOrder.Id" id="editOrderId" />
+        <div>
+            <label>Пользователь:</label>
+            <input type="text" asp-for="EditableOrder.User.Login" id="editOrderUser" disabled />
+        </div>
+        <div>
+            <label>Дата заказа:</label>
+            <input type="text" asp-for="EditableOrder.OrderDate" id="editOrderDate" disabled />
+        </div>
+        <div>
+            <label>Общая сумма:</label>
+            <input type="number" asp-for="EditableOrder.TotalAmount" id="editOrderTotalAmount" step="0.01" />
+        </div>
+        <button type="submit">Сохранить</button>
+        <button type="button" onclick="closeEditOrderForm()">Отмена</button>
+    </form>
+</div>
+<script>
+    function openEditOrderForm(id, userLogin, orderDate, totalAmount) {
+        document.getElementById('editOrderId').value = id;
+        document.getElementById('editOrderUser').value = userLogin;
+        document.getElementById('editOrderDate').value = orderDate;
+        document.getElementById('editOrderTotalAmount').value = totalAmount;
+        document.getElementById('editOrderForm').style.display = 'block';
+    }
+
+    function closeEditOrderForm() {
+        document.getElementById('editOrderForm').style.display = 'none';
+    }
+</script>
