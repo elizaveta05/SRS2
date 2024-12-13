@@ -1,0 +1,72 @@
+﻿@page "{Id:int}"
+@model SRS2.Pages.UserPageModel
+@{
+    ViewData["Title"] = "Страница пользователя";
+}
+
+<h1>Добро пожаловать, пользователь!</h1>
+
+<h2>Доступные товары</h2>
+<form method="post">
+    <table>
+        <thead>
+            <tr>
+                <th>Наименование</th>
+                <th>Цена</th>
+                <th>Количество</th>
+                <th>Действие</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model.Products)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Price</td>
+                    <td>
+                        <input type="number" asp-for="SelectedQuantity" value="0" min="1" />
+                        <input type="hidden" asp-for="SelectedProductId" value="@product.Id" />
+                    </td>
+                    <td>
+                        <button type="submit">Добавить в заказ</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
+
+<h2>Ваши заказы</h2>
+@if (Model.UserOrders.Any())
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Дата заказа</th>
+                <th>Сумма</th>
+                <th>Товары</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model.UserOrders)
+            {
+                <tr>
+                    <td>@order.OrderDate.ToString("dd.MM.yyyy HH:mm")</td>
+                    <td>@order.TotalAmount</td>
+                    <td>
+                        <ul>
+                            @foreach (var item in order.OrderProducts)
+                            {
+                                <li>@item.Product.Name </li>
+                            }
+                        </ul>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>У вас пока нет заказов.</p>
+}

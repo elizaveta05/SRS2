@@ -16,7 +16,6 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // Значение HSTS по умолчанию — 30 дней. Вы можете изменить это значение для сценариев в производстве.
     app.UseHsts();
 }
 

@@ -16,6 +16,9 @@ namespace SRS2.Pages
         [BindProperty]
         public string Password { get; set; }
 
+        [BindProperty]
+        public string Role { get; set; }
+
         public IndexModel(ILogger<IndexModel> logger, ApplicationDbContext context)
         {
             _logger = logger;
@@ -28,7 +31,8 @@ namespace SRS2.Pages
         }
 
         public IActionResult OnPost()
-        {
+        { 
+
             // Инициализация хэшировщика паролей
             var passwordHasher = new PasswordHasher<User>();
 
@@ -39,7 +43,9 @@ namespace SRS2.Pages
 
                 if (user == null)
                 {
-                    ModelState.AddModelError(string.Empty, "Пользователя не существует.Зарегистрируйтесь.");
+                    // Если пользователь не найден
+                    ModelState.AddModelError(string.Empty, "Пользователя не существует. Зарегистрируйтесь.");
+                    return Page();
                 }
 
                 // Проверка хэша пароля
@@ -47,8 +53,19 @@ namespace SRS2.Pages
 
                 if (result == PasswordVerificationResult.Success)
                 {
-                    // Перенаправление на домашнюю страницу
-                    return RedirectToPage("/HomePage");
+                    // Проверка роли
+                    if (user.Role == "Moderator")
+                    {
+                        return RedirectToPage("/ModeratorPage", new { id = user.Id });
+                    }
+                    else if (user.Role == "User")
+                    {
+                        return RedirectToPage("/UserPage", new { id = user.Id });
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "У вас недостаточно прав.");
+                    }
                 }
                 else
                 {
@@ -64,5 +81,7 @@ namespace SRS2.Pages
 
             return Page();
         }
+
+
     }
 }
